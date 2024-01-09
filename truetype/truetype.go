@@ -197,6 +197,8 @@ type Font struct {
 	ascent                  int32               // In FUnits.
 	descent                 int32               // In FUnits; typically negative.
 	lineGap                 int32               // In FUnits.
+	xHeight                 int32               // In FUnits.
+	capHeight               int32               // In FUnits.
 	bounds                  fixed.Rectangle26_6 // In FUnits.
 	// Values from the maxp section.
 	maxTwilightPoints, maxStorage, maxFunctionDefs, maxStackElements uint16
@@ -376,6 +378,15 @@ func (f *Font) parseMaxp() error {
 	f.maxStorage = u16(f.maxp, 18)
 	f.maxFunctionDefs = u16(f.maxp, 20)
 	f.maxStackElements = u16(f.maxp, 24)
+	return nil
+}
+
+func (f *Font) parseOS2() error {
+	if len(f.os2) < 90 {
+		return nil
+	}
+	f.xHeight = int32(int16(u16(f.os2, 86)))
+	f.capHeight = int32(int16(u16(f.os2, 88)))
 	return nil
 }
 
@@ -669,6 +680,9 @@ func parse(ttf []byte, offset int) (font *Font, err error) {
 		return
 	}
 	if err = f.parseHhea(); err != nil {
+		return
+	}
+	if err = f.parseOS2(); err != nil {
 		return
 	}
 	font = f
