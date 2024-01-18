@@ -3,7 +3,7 @@
 package freetype
 
 const (
-	Version     = "v1.0.1"
-	GitCommit   = "4e73317"          // the commit JUST BEFORE the release
-	VersionDate = "2023-03-29 04:22" // UTC
+	Version     = "v1.0.2"
+	GitCommit   = "08ab4e6"          // the commit JUST BEFORE the release
+	VersionDate = "2024-01-18 18:34" // UTC
 )
