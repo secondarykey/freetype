@@ -457,7 +457,7 @@ func (f *Font) Name(id NameID) string {
 		u16s := make([]uint16, 1)
 		var buf bytes.Buffer
 		for i := 0; i < lb; i++ {
-			u16s[0] = u16(src, i)
+			u16s[0] = u16(src, i*2)
 			r := utf16.Decode(u16s)
 			n := utf8.EncodeRune(b8buf, r[0])
 			buf.Write([]byte(string(b8buf[:n])))
