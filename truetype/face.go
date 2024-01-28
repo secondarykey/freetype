@@ -240,7 +240,7 @@ func NewFace(f *Font, opts *Options) IndexableFace {
 }
 
 type face struct {
-	sync.RWMutex
+	mu            sync.Mutex
 	f             *Font
 	hinting       font.Hinting
 	scale         fixed.Int26_6
@@ -389,8 +389,8 @@ func (a *face) GlyphBounds(r rune) (bounds fixed.Rectangle26_6, advance fixed.In
 }
 
 func (a *face) GlyphAdvance(r rune) (advance fixed.Int26_6, ok bool) {
-	a.Lock()
-	defer a.Unlock()
+	a.mu.Lock()
+	defer a.mu.Unlock()
 	if a.advanceCache == nil {
 		a.advanceCache = make(map[rune]fixed.Int26_6, 1024)
 	}
