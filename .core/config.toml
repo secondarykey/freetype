@@ -1,0 +1,6 @@
+ID = 'com.goki.freetype'
+Name = 'Freetype'
+Version = 'v1.0.4'
+
+[Release]
+  Package = 'freetype'
